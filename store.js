@@ -73,6 +73,26 @@ function addToCart(cartItem) {
     cartRow.innerHTML = html;
     const cart = document.querySelector('.cart-items');
     cart.appendChild(cartRow);  
+    setToLocalStorage(cartItem);
+  
+}
+
+function retrieveTasks() {
+  let cart;
+  if (localStorage.getItem('cart') === null) {
+    cart = [];
+    console.log(cart);
+  } else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+  }
+  return cart;
+}
+
+
+function setToLocalStorage(cartItem) {
+  cart = retrieveTasks();
+  cart.push(cartItem)
+  localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 
