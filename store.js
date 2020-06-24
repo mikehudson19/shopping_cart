@@ -30,6 +30,7 @@ document.addEventListener('click', (e) => {
     }
       addToCart(cartItem);
       calculateTotalPrice();
+      setToLocalStorage(cartItem);
     }
   })
 
@@ -49,6 +50,7 @@ document.addEventListener('click', (e) => {
     if (e.target.className.includes('btn-danger')) {
       e.target.parentElement.parentElement.remove();
       calculateTotalPrice();
+      removeFromLS(e.target);
     }
   })
 
@@ -73,7 +75,7 @@ function addToCart(cartItem) {
     cartRow.innerHTML = html;
     const cart = document.querySelector('.cart-items');
     cart.appendChild(cartRow);  
-    setToLocalStorage(cartItem);
+    
   
 }
 
@@ -94,6 +96,18 @@ function setToLocalStorage(cartItem) {
   cart.push(cartItem)
   localStorage.setItem('cart', JSON.stringify(cart));
 }
+
+function removeFromLS(target) {
+  const cart = retrieveTasks();
+  const toRemove = target.parentElement.parentElement.querySelector('.cart-item-title');
+  cart.forEach((obj, index) => {
+    if (obj.name === toRemove.innerText) {
+      cart.splice(index, 1);
+    }
+  })
+  localStorage.setItem('cart', JSON.stringify(cart));
+} 
+
 
 
 function calculateTotalPrice() {

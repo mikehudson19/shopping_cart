@@ -1,6 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const cart = localStorage.getItem('cart');
-  const ffiv = document.querySelector('.cart-items');
-  ffiv.innerHTML = cart;
+
+  const cart = retrieveTasks();
+  for (let i = 0; i < cart.length; i ++) {
+    addToCart(cart[i]);
+  }
+  calculateTotalPrice();
+
+
 
 })
+
+
+
