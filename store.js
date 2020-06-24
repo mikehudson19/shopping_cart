@@ -19,16 +19,16 @@ document.addEventListener('click', (e) => {
 
     const cartItem = new CartItem(itemImage, itemName, itemPrice);
 
-    const cartItems = document.querySelectorAll('.cart-item-title');
+    const cartItems = retrieveCart();
     for (obj of cartItems) {
-      if (obj.innerText === cartItem.name) {
-        alert('You have already added this item to the cart.')
+      if (obj.name === cartItem.name) {
+        createAlert('Item has already been added to cart', 'failure')
         return;
       } 
     }
    
       setToLocalStorage(cartItem);
-     
+      createAlert('Item has been added to cart', 'success');
     }
   })
 
@@ -77,7 +77,7 @@ function addToCart(cartItem) {
   
 }
 
-function retrieveTasks() {
+function retrieveCart() {
   let cart;
   if (localStorage.getItem('cart') === null) {
     cart = [];
@@ -90,13 +90,13 @@ function retrieveTasks() {
 
 
 function setToLocalStorage(cartItem) {
-  cart = retrieveTasks();
+  cart = retrieveCart();
   cart.push(cartItem)
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 function removeFromLS(target) {
-  const cart = retrieveTasks();
+  const cart = retrieveCart();
   const toRemove = target.parentElement.parentElement.querySelector('.cart-item-title');
   cart.forEach((obj, index) => {
     if (obj.name === toRemove.innerText) {
@@ -125,12 +125,20 @@ function calculateTotalPrice() {
 
 function detectChange(e) {
   if (e.target.value == 0) {
-    alert('You cannot select zero items')
+    createAlert('You cannot select zero items', 'failure')
     e.target.value = 1;
   } 
 }
 
-
+function createAlert (message, status) {
+  const alert = document.createElement('div');
+  alert.innerHTML = `<p>${message}</p>`
+  alert.className = `alert ${status}`;
+  document.body.appendChild(alert);
+  setTimeout(() => {
+    alert.style.visibility = 'hidden';
+  },1800)
+}
 
 
  
