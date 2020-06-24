@@ -1,5 +1,3 @@
-const cartItemContainer = document.getElementsByClassName('cart-items')[0];
-const cartRows = cartItemContainer.getElementsByClassName('cart-row');
 
 class CartItem {
   constructor(image, name, price) {
@@ -28,9 +26,9 @@ document.addEventListener('click', (e) => {
         return;
       } 
     }
-      addToCart(cartItem);
-      calculateTotalPrice();
+   
       setToLocalStorage(cartItem);
+     
     }
   })
 
@@ -131,6 +129,8 @@ function detectChange(e) {
     e.target.value = 1;
   } 
 }
+
+
 
 
  
